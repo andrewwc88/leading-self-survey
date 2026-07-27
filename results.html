@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Leading Self, survey results</title>
+<style>
+  :root{--navy:#20283B;--royal:#3D5FE8;--ice:#CCD9FB;--paper:#FBFAF8;--line:#DDE3F2;
+        --green:#2E9E63;--red:#B0392E}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--navy);
+       font-family:"Open Sans","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.5}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px 70px}
+  header{background:var(--navy);margin:0 -22px 30px;padding:32px 22px}
+  header h1{font-family:Georgia,serif;font-size:30px;color:#fff;margin:0}
+  header p{color:#fff;margin:8px 0 0;font-size:14px}
+
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:0 0 12px}
+  .tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+  .tile .k{font-size:10.5px;font-weight:800;letter-spacing:.12em;color:var(--royal);margin:0 0 6px}
+  .tile .v{font-size:34px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;margin:0}
+  .tile .s{font-size:12.5px;margin:6px 0 0}
+
+  h2{font-family:Georgia,serif;font-size:21px;margin:34px 0 12px}
+  .bars{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+  .bar{display:flex;align-items:center;gap:10px;margin:0 0 7px;font-size:13px}
+  .bar b{width:22px;text-align:right;font-variant-numeric:tabular-nums}
+  .bar .t{flex:1;height:16px;background:#EEF1F8;border-radius:4px;overflow:hidden}
+  .bar .t i{display:block;height:100%;background:var(--royal)}
+  .bar .n{width:26px;font-variant-numeric:tabular-nums;font-weight:700}
+
+  .r{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 12px}
+  .rh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;
+      border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:12px}
+  .who{font-weight:800;font-size:16px}
+  .when{font-size:12px}
+  .score{font-weight:800;font-variant-numeric:tabular-nums;font-size:15px;padding:3px 11px;border-radius:20px;color:#fff}
+  .p{background:var(--green)} .pa{background:var(--royal)} .d{background:var(--red)}
+  .lab{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--royal);margin:12px 0 3px}
+  .lab:first-child{margin-top:0}
+  .txt{margin:0;white-space:pre-wrap}
+  .quote{background:#F2F5FD;border-left:3px solid var(--royal);border-radius:0 8px 8px 0;padding:12px 14px;margin:4px 0 0}
+  .empty{padding:50px 0;text-align:center}
+  button{font:inherit;font-weight:700;background:var(--royal);color:#fff;border:0;
+         border-radius:9px;padding:11px 18px;cursor:pointer}
+  .tools{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px}
+  .ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Leading Self, survey results</h1>
+    <p>Live. Every response as it lands.</p>
+  </header>
+
+  <div class="tools">
+    <button id="refresh">Refresh</button>
+    <button class="ghost" id="csv">Download CSV</button>
+  </div>
+
+  <div id="out"><p class="empty">Loading</p></div>
+</div>
+
+<script>
+(function(){
+  var DB="https://colin-workshops-default-rtdb.firebaseio.com/sessions/jpla-m1-survey-8f3a2c/responses.json";
+  var rows=[];
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function band(n){ return n>=9?'p':(n>=7?'pa':'d'); }
+
+  function render(){
+    var out=document.getElementById('out');
+    if(!rows.length){ out.innerHTML='<p class="empty">No responses yet. The page updates when you hit Refresh.</p>'; return; }
+
+    var n=rows.length;
+    var prom=rows.filter(function(r){return r.nps>=9}).length;
+    var det=rows.filter(function(r){return r.nps<=6}).length;
+    var nps=Math.round((prom/n - det/n)*100);
+    var avg=(rows.reduce(function(a,r){return a+(r.nps||0)},0)/n).toFixed(1);
+    var yes=rows.filter(function(r){return r.willingTestimonial==='Yes'}).length;
+    var quotes=rows.filter(function(r){return r.testimonial}).length;
+
+    var h='<div class="tiles">'+
+      tile('RESPONSES', n, '')+
+      tile('NPS', (nps>0?'+':'')+nps, prom+' promoters, '+det+' detractors')+
+      tile('AVERAGE SCORE', avg, 'out of 10')+
+      tile('TESTIMONIALS', quotes, yes+' said yes to being asked')+
+    '</div>';
+
+    var counts=[]; for(var i=0;i<=10;i++) counts[i]=0;
+    rows.forEach(function(r){ if(r.nps>=0&&r.nps<=10) counts[r.nps]++; });
+    var max=Math.max.apply(null,counts)||1;
+    h+='<h2>How they scored it</h2><div class="bars">';
+    for(var i=10;i>=0;i--){
+      h+='<div class="bar"><b>'+i+'</b><span class="t"><i style="width:'+
+         (counts[i]/max*100)+'%"></i></span><span class="n">'+counts[i]+'</span></div>';
+    }
+    h+='</div>';
+
+    h+='<h2>Every response</h2>';
+    rows.slice().sort(function(a,b){ return (b.at||'').localeCompare(a.at||''); }).forEach(function(r){
+      h+='<div class="r"><div class="rh">'+
+         '<span class="who">'+esc(r.name||'Anonymous')+'</span>'+
+         '<span class="when">'+esc((r.at||'').replace('T',' ').slice(0,16))+'</span>'+
+         '<span class="score '+band(r.nps)+'">'+r.nps+'</span></div>';
+      if(r.mostValuable) h+='<p class="lab">MOST VALUABLE</p><p class="txt">'+esc(r.mostValuable)+'</p>';
+      if(r.improvements) h+='<p class="lab">WHAT TO IMPROVE</p><p class="txt">'+esc(r.improvements)+'</p>';
+      if(r.testimonial) h+='<p class="lab">TESTIMONIAL</p><p class="txt quote">'+esc(r.testimonial)+'</p>';
+      if(!r.testimonial && r.willingTestimonial==='Yes')
+        h+='<p class="lab">TESTIMONIAL</p><p class="txt">Happy to give one, asked us to reach out.</p>';
+      h+='</div>';
+    });
+    out.innerHTML=h;
+  }
+
+  function tile(k,v,s){
+    return '<div class="tile"><p class="k">'+k+'</p><p class="v">'+v+'</p>'+
+           (s?'<p class="s">'+s+'</p>':'')+'</div>';
+  }
+
+  function load(){
+    fetch(DB+'?t='+Date.now()).then(function(r){return r.json()}).then(function(d){
+      rows = d ? Object.keys(d).map(function(k){ return d[k]; }) : [];
+      render();
+    }).catch(function(){
+      document.getElementById('out').innerHTML='<p class="empty">Could not reach the database.</p>';
+    });
+  }
+
+  document.getElementById('refresh').addEventListener('click', load);
+  document.getElementById('csv').addEventListener('click', function(){
+    var cols=['at','name','nps','mostValuable','improvements','willingTestimonial','testimonial'];
+    var q=function(s){ return '"'+String(s==null?'':s).replace(/"/g,'""')+'"'; };
+    var csv=cols.join(',')+'\n'+rows.map(function(r){
+      return cols.map(function(c){ return q(r[c]); }).join(',');
+    }).join('\n');
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+    a.download='leading-self-survey.csv'; a.click();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
