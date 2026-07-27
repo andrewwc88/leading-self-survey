@@ -125,7 +125,11 @@
 
   function load(){
     fetch(DB+'?t='+Date.now()).then(function(r){return r.json()}).then(function(d){
-      rows = d ? Object.keys(d).map(function(k){ return d[k]; }) : [];
+      // Only count rows that carry a real score. A partial or stray write must never
+      // move the NPS or the average.
+      rows = d ? Object.keys(d).map(function(k){ return d[k]; }).filter(function(r){
+        return r && typeof r.nps === 'number' && r.nps >= 0 && r.nps <= 10;
+      }) : [];
       render();
     }).catch(function(){
       document.getElementById('out').innerHTML='<p class="empty">Could not reach the database.</p>';
