@@ -2,219 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Leading Self, your feedback</title>
+<meta http-equiv="refresh" content="0; url=https://yesand-leading-self.web.app/">
+<link rel="canonical" href="https://yesand-leading-self.web.app/">
 <style>
-  :root{
-    --navy:#20283B; --royal:#3D5FE8; --ice:#CCD9FB; --paper:#FBFAF8; --line:#DDE3F2;
-  }
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;padding:0}
-  body{
-    background:var(--paper); color:var(--navy);
-    font-family:"Open Sans","Helvetica Neue",Arial,sans-serif;
-    font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:640px;margin:0 auto;padding:0 20px 64px}
-
-  header{background:var(--navy);margin:0 -20px 0;padding:34px 20px 30px}
-  .eyebrow{
-    font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--ice);
-    text-transform:uppercase;margin:0 0 10px
-  }
-  header h1{
-    font-family:Georgia,"Times New Roman",serif;font-weight:700;
-    font-size:32px;line-height:1.12;color:#fff;margin:0
-  }
-  header p{color:#fff;margin:12px 0 0;font-size:14.5px;max-width:34em}
-
-  .q{border-top:1px solid var(--line);padding:30px 0 4px}
-  .q:first-of-type{border-top:0}
-  .qn{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--royal);margin:0 0 8px}
-  .qt{font-family:Georgia,"Times New Roman",serif;font-size:20px;font-weight:700;margin:0 0 6px;line-height:1.3}
-  .qh{font-size:14px;margin:0 0 16px;color:var(--navy)}
-  .opt{font-size:13px;font-weight:700;color:var(--royal)}
-
-  .scale{display:grid;grid-template-columns:repeat(11,1fr);gap:8px;margin:0 0 10px}
-  .scale button{
-    padding:14px 0;font:inherit;font-weight:800;font-size:17px;
-    font-variant-numeric:tabular-nums;
-    background:#fff;color:var(--navy);border:1.5px solid var(--line);border-radius:10px;cursor:pointer
-  }
-  .scale button[aria-pressed="true"]{background:var(--royal);border-color:var(--royal);color:#fff}
-  .ends{display:flex;justify-content:space-between;font-size:12px;font-weight:700}
-
-  .yn{display:flex;gap:12px}
-  .yn button{
-    flex:1;padding:16px;font:inherit;font-weight:700;font-size:16px;
-    background:#fff;color:var(--navy);border:1.5px solid var(--line);border-radius:10px;cursor:pointer
-  }
-  .yn button[aria-pressed="true"]{background:var(--royal);border-color:var(--royal);color:#fff}
-
-  textarea,input[type=text]{
-    width:100%;font:inherit;font-size:16px;color:var(--navy);background:#fff;
-    border:1.5px solid var(--line);border-radius:10px;padding:14px;resize:vertical
-  }
-  textarea{min-height:120px}
-  textarea:focus,input:focus,button:focus-visible{outline:2.5px solid var(--royal);outline-offset:2px}
-
-  .send{
-    width:100%;margin-top:30px;padding:19px;font:inherit;font-weight:800;font-size:17px;
-    background:var(--royal);color:#fff;border:0;border-radius:12px;cursor:pointer
-  }
-  .send[disabled]{opacity:.55;cursor:default}
-  .err{margin-top:14px;font-size:14px;font-weight:700;color:#B0392E}
-  .foot{margin-top:34px;font-size:12.5px;color:var(--navy);border-top:1px solid var(--line);padding-top:16px}
-
-  #done{display:none;padding:70px 0 40px;text-align:center}
-  #done h2{font-family:Georgia,serif;font-size:30px;margin:0 0 14px}
-  #done p{font-size:15.5px;margin:0 auto;max-width:26em}
-  .tick{width:62px;height:62px;border-radius:50%;background:var(--royal);margin:0 auto 24px;
-        display:flex;align-items:center;justify-content:center}
-  .tick svg{width:30px;height:30px}
-
-  @media (max-width:560px){
-    .scale{grid-template-columns:repeat(6,1fr)}
-  }
-  @media (max-width:420px){
-    header h1{font-size:27px}
-    .scale{gap:6px}
-    .scale button{padding:12px 0;font-size:15px}
-  }
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:#f6f8fc;color:#20283B;
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .card{max-width:520px;padding:32px;text-align:center}
+  h1{font-family:Georgia,serif;font-size:26px;margin:0 0 10px}
+  p{font-size:16px;line-height:1.5;margin:0 0 20px}
+  a{display:inline-block;background:#3D5FE8;color:#fff;text-decoration:none;font-weight:700;
+    padding:14px 24px;border-radius:12px}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <header>
-    <p class="eyebrow">Jim Pattison Leadership Academy</p>
-    <h1>Module One, Leading Self</h1>
-    <p>Two minutes of honest feedback shapes how we run the next one. Nothing here is required except the first question.</p>
-  </header>
-
-  <form id="f" novalidate>
-
-    <div class="q">
-      <p class="qn">QUESTION 1</p>
-      <p class="qt">How likely is it that you would recommend this session to a friend or colleague?</p>
-      <div class="scale" id="nps" role="group" aria-label="Zero to ten"></div>
-      <div class="ends"><span>Not at all likely</span><span>Extremely likely</span></div>
-    </div>
-
-    <div class="q">
-      <p class="qn">QUESTION 2</p>
-      <p class="qt">What have you found most valuable about the Leading Self module?</p>
-      <textarea id="q2" aria-label="Most valuable"></textarea>
-    </div>
-
-    <div class="q">
-      <p class="qn">QUESTION 3</p>
-      <p class="qt">What improvements would make this module even more valuable in the future?</p>
-      <textarea id="q3" aria-label="Improvements"></textarea>
-    </div>
-
-    <div class="q">
-      <p class="qn">QUESTION 4</p>
-      <p class="qt">Would you be willing to give us a testimonial?</p>
-      <p class="qh">Testimonials are the lifeblood of our business. Leave one below, or say yes and leave it blank and we will reach out shortly.</p>
-      <div class="yn" id="yn" role="group" aria-label="Yes or no">
-        <button type="button" data-v="Yes" aria-pressed="false">Yes</button>
-        <button type="button" data-v="No" aria-pressed="false">No</button>
-      </div>
-    </div>
-
-    <div class="q">
-      <p class="qn">QUESTION 5 <span class="opt">OPTIONAL</span></p>
-      <p class="qt">Your testimonial, one to three sentences</p>
-      <textarea id="q5" aria-label="Testimonial"></textarea>
-    </div>
-
-    <div class="q">
-      <p class="qn">QUESTION 6 <span class="opt">OPTIONAL</span></p>
-      <p class="qt">Your name</p>
-      <input type="text" id="q6" autocomplete="name" aria-label="Your name">
-    </div>
-
-    <button class="send" id="send" type="submit">Send my feedback</button>
-    <p class="err" id="err" hidden></p>
-  </form>
-
-  <p class="foot">Philip Edgell and Colin Cox read every response. We never publish a testimonial without asking you first.</p>
-
-  <div id="done">
-    <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"
-      stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 L9.5 18 L20 6"/></svg></div>
-    <h2>Thank you</h2>
-    <p>That is genuinely useful. See you at the virtual session with your plan.</p>
+  <div class="card">
+    <h1>This survey has moved</h1>
+    <p>You are being taken there now. If nothing happens, tap the button.</p>
+    <a href="https://yesand-leading-self.web.app/">Open the survey</a>
   </div>
-
-</div>
-
-<script>
-(function(){
-  var DB = "https://colin-workshops-default-rtdb.firebaseio.com/sessions/jpla-leading-self-v2/responses.json";
-  var state = { nps:null, testimonial:null };
-
-  var npsBox = document.getElementById('nps');
-  for (var i=0;i<=10;i++){
-    var b=document.createElement('button');
-    b.type='button'; b.textContent=i; b.setAttribute('aria-pressed','false'); b.dataset.v=i;
-    npsBox.appendChild(b);
-  }
-  function pick(box, key){
-    box.addEventListener('click', function(e){
-      var b=e.target.closest('button'); if(!b) return;
-      [].forEach.call(box.querySelectorAll('button'), function(x){ x.setAttribute('aria-pressed','false'); });
-      b.setAttribute('aria-pressed','true');
-      state[key] = b.dataset.v;
-      document.getElementById('err').hidden = true;
-    });
-  }
-  pick(npsBox,'nps');
-  pick(document.getElementById('yn'),'testimonial');
-
-  document.getElementById('f').addEventListener('submit', function(e){
-    e.preventDefault();
-    var err=document.getElementById('err');
-    if (state.nps===null){
-      err.textContent='Please pick a number from 0 to 10 first.';
-      err.hidden=false;
-      npsBox.scrollIntoView({behavior:'smooth', block:'center'});
-      return;
-    }
-    var btn=document.getElementById('send');
-    btn.disabled=true; btn.textContent='Sending';
-
-    var v=function(id){ return document.getElementById(id).value.trim().slice(0,4000); };
-    var payload = {
-      nps: Number(state.nps),
-      mostValuable: v('q2'),
-      improvements: v('q3'),
-      willingTestimonial: state.testimonial || '',
-      testimonial: v('q5'),
-      name: v('q6'),
-      at: new Date().toISOString(),
-      module: 'Module One, Leading Self'
-    };
-
-    fetch(DB, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
-    }).then(function(r){
-      if(!r.ok) throw new Error('http '+r.status);
-      document.getElementById('f').style.display='none';
-      document.querySelector('.foot').style.display='none';
-      document.getElementById('done').style.display='block';
-      window.scrollTo({top:0, behavior:'smooth'});
-    }).catch(function(){
-      btn.disabled=false; btn.textContent='Send my feedback';
-      err.textContent='That did not send. Check your connection and try once more.';
-      err.hidden=false;
-    });
-  });
-})();
-</script>
+  <script>location.replace('https://yesand-leading-self.web.app/');</script>
 </body>
 </html>
